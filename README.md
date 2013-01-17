@@ -34,5 +34,5 @@ Xvfb :1 -screen 0 1600x1200x24 &
 ... and then run a basic processing sketch to test that it works:
 
 ```
-DISPLAY=localhost:1.0 ./processing/processing-java --sketch=../sketches/test --output=../sketches/test/build --force --run
+DISPLAY=localhost:1.0 ./bin/processing/processing-java --sketch=../../sketches/test --output=../../sketches/test/build --force --run
 ```

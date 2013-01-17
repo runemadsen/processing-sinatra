@@ -1,3 +1,5 @@
+**NOTE: I'm still working on this. The Sinatra app is currently not implemented, although the Processing calls work as described below. So I just need to shell out from Sinatra to Processing (as soon as I figured out if this can run on Heroku)**
+
 # Processing Sinatra
 
 This is a basic template with basic puppet recipes that demonstrates how to run Processing on a headless server setup. This can be used to do extremely powerful image manipulation tasks, replacing ImageMagick.

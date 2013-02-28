@@ -1,1 +1,1 @@
-rvm use 1.9.3@processing-sinatra --create
+rvm ruby-1.9.3-p385@processing-sinatra --create

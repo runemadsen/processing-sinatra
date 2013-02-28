@@ -1,6 +1,7 @@
 Vagrant::Config.run do |config|
 
   config.vm.box = "lucid64"
+  config.vm.box_url = "http://files.vagrantup.com/lucid64.box"
 
   config.vm.forward_port 3000, 3000
   

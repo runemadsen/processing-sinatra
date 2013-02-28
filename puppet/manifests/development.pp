@@ -1,6 +1,13 @@
-stage { 'req-install': before => Stage['rvm-install'] }
+stage { 'before-rvm': 
+  before => Stage['rvm-install']
+}
 
-class requirements {
+stage { 'second':
+ require => Stage['main']
+}
+
+class requirements
+{
   group { "puppet": ensure => "present", }
   
   exec { "apt-update":
@@ -32,20 +39,38 @@ class requirements {
 
 class installrvm {
   include rvm
-  rvm::system_user { vagrant: ; }
+  rvm::system_user { vagrant: }
+}
 
-  if $rvm_installed == "true" {
-    rvm_system_ruby {
-      'ruby-1.9.3-p362':
-        ensure => 'present';
-    }
+class installrest
+{
+  include xvfb
+
+  rvm_system_ruby {
+    'ruby-1.9.3-p385':
+    ensure => 'present';
+  }
+
+  rvm_gemset { "ruby-1.9.3-p385@processing-sinatra":
+    ensure => present,
+    require => Rvm_system_ruby['ruby-1.9.3-p385'];
+  }
+
+  rvm_gem { 'ruby-1.9.3-p385@processing-sinatra/bundler':
+    require => Rvm_gemset['ruby-1.9.3-p385@processing-sinatra']
+  }
+
+  exec { 'bundle-install':
+      command => '/usr/local/rvm/bin/rvm ruby-1.9.3-p385@processing-sinatra do bundle install  --without production',
+      cwd => '/vagrant',
+      logoutput => true,
+      require => Rvm_gem['ruby-1.9.3-p385@processing-sinatra/bundler'],
+      user => 'vagrant'
   }
 }
 
-class doinstall {
-  class { requirements:, stage => "req-install" }
-  include installrvm
-  include xvfb
-}
+class { 'requirements':, stage => "before-rvm" }
 
-include doinstall
+class { 'installrvm': }
+
+class { 'installrest':, stage => "second" }

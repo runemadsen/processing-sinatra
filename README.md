@@ -1,5 +1,7 @@
 # Processing Sinatra
 
+**NB: I'm looking for someone who can compile a static linked binary of Xvfb, so this can run on Heroku. Please get in touch if you can help.**
+
 This is a vanilla Sinatra template with basic puppet recipes that demonstrates how to run Processing on a headless server setup. This can be used to do extremely powerful image manipulation tasks, replacing ImageMagick.
 
 This will not run on heroku. If someone if smart enough to compile a static linked binary to the /bin folder, I would be happy as hell.

@@ -1,0 +1,36 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          xvfb
+# Required-Start:    $syslog
+# Required-Stop:     $syslog
+# Should-Start:      $network
+# Should-Stop:       $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: xvfb - virtual framebuffer X server
+# Description:       Xvfb provides an X server that can run on machines with no
+#                    display hardware and no physical input devices. It emulates a dumb
+#                    framebuffer using virtual memory.
+### END INIT INFO
+
+XVFB=/usr/bin/Xvfb
+XVFBARGS=":0 -nolisten tcp -fbdir /var/run"
+PIDFILE=/var/run/xvfb.pid
+
+case "$1" in
+  start)
+    start-stop-daemon --start --quiet --pidfile $PIDFILE --make-pidfile --background --exec $XVFB -- $XVFBARGS
+    ;;
+  stop)
+    start-stop-daemon --stop --quiet --pidfile $PIDFILE
+    ;;
+  restart)
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Usage: /etc/init.d/xvfb {start|stop|restart}"
+    exit 1
+esac
+
+exit 0
